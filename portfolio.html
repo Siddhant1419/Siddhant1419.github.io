@@ -1,0 +1,1171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Siddhant Acharya — Software Engineer</title>
+<meta name="description" content="Full-Stack Software Engineer. Java · Spring Boot · AI/ML · Cloud. Based in Boston.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+<style>
+/* ─────────────────────────────────────────
+   TOKENS
+───────────────────────────────────────── */
+:root {
+  --black:    #080809;
+  --black2:   #0f0f11;
+  --black3:   #141417;
+  --blue:     #1a3ccc;      /* Persian blue */
+  --blue-dim: rgba(26,60,204,.12);
+  --blue-b:   rgba(26,60,204,.28);
+  --blue-h:   #2548e0;      /* hover */
+  --silver:   #b8bfcc;
+  --silver2:  #d4d9e3;
+  --silver-d: #6a7080;
+  --white:    #f0f2f8;
+  --border:   rgba(255,255,255,.07);
+  --border2:  rgba(255,255,255,.12);
+}
+
+/* ─────────────────────────────────────────
+   RESET
+───────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; font-size: 16px; }
+body {
+  background: var(--black);
+  color: var(--silver);
+  font-family: 'Inter', sans-serif;
+  overflow-x: hidden;
+  cursor: none;
+  -webkit-font-smoothing: antialiased;
+}
+::selection { background: var(--blue); color: #fff; }
+a { text-decoration: none; color: inherit; }
+
+/* ─────────────────────────────────────────
+   CURSOR
+───────────────────────────────────────── */
+#cur {
+  position: fixed; z-index: 9999; pointer-events: none;
+  width: 8px; height: 8px; border-radius: 50%;
+  background: var(--blue);
+  transform: translate(-50%,-50%);
+  transition: width .2s, height .2s, background .2s;
+}
+#cur-r {
+  position: fixed; z-index: 9998; pointer-events: none;
+  width: 32px; height: 32px; border-radius: 50%;
+  border: 1px solid rgba(26,60,204,.4);
+  transform: translate(-50%,-50%);
+}
+body.hov #cur { width: 5px; height: 5px; }
+body.hov #cur-r { width: 48px; height: 48px; border-color: rgba(26,60,204,.2); }
+
+/* ─────────────────────────────────────────
+   LOADER
+───────────────────────────────────────── */
+#loader {
+  position: fixed; inset: 0; z-index: 9990;
+  background: var(--black);
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center; gap: 2.5rem;
+  transition: opacity .7s, visibility .7s;
+}
+#loader.out { opacity: 0; visibility: hidden; }
+.ld-name {
+  font-family: 'Syne', sans-serif;
+  font-size: clamp(2.5rem, 8vw, 5.5rem);
+  font-weight: 800; letter-spacing: -.02em;
+  color: var(--white); overflow: hidden; line-height: 1;
+}
+.ld-name .blue { color: var(--blue); }
+.ld-name span {
+  display: inline-block;
+  transform: translateY(110%);
+  animation: liftIn .6s cubic-bezier(.16,1,.3,1) both;
+}
+.ld-name span:nth-child(1){animation-delay:.05s}
+.ld-name span:nth-child(2){animation-delay:.12s}
+.ld-name span:nth-child(3){animation-delay:.19s}
+.ld-name span:nth-child(4){animation-delay:.26s}
+.ld-name span:nth-child(5){animation-delay:.33s}
+.ld-name span:nth-child(6){animation-delay:.4s}
+.ld-name span:nth-child(7){animation-delay:.47s}
+.ld-name span:nth-child(8){animation-delay:.54s}
+@keyframes liftIn { to { transform: translateY(0); } }
+.ld-track { width: min(280px,65vw); height: 1px; background: var(--border2); }
+.ld-fill { height: 100%; width: 0%; background: var(--blue); transition: width .06s; }
+
+/* ─────────────────────────────────────────
+   NAV
+───────────────────────────────────────── */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 500;
+  padding: 1.2rem 3.5rem;
+  display: flex; align-items: center; justify-content: space-between;
+  transition: background .35s, border-color .35s;
+}
+nav.stuck {
+  background: rgba(8,8,9,.92);
+  backdrop-filter: blur(18px);
+  border-bottom: 1px solid var(--border);
+}
+.nav-logo {
+  font-family: 'Syne', sans-serif;
+  font-size: 1rem; font-weight: 800; letter-spacing: .12em;
+  text-transform: uppercase; color: var(--white);
+}
+.nav-logo em { font-style: normal; color: var(--blue); }
+.nav-links { display: flex; gap: 2.4rem; list-style: none; }
+.nav-links a {
+  font-size: .73rem; font-weight: 500; letter-spacing: .07em;
+  text-transform: uppercase; color: var(--silver-d);
+  transition: color .2s;
+}
+.nav-links a:hover { color: var(--white); }
+.nav-pill {
+  font-size: .72rem; font-weight: 600; letter-spacing: .07em;
+  text-transform: uppercase; color: var(--blue);
+  border: 1px solid var(--blue-b); padding: .42rem 1.1rem;
+  border-radius: 2px;
+  transition: background .2s, color .2s;
+}
+.nav-pill:hover { background: var(--blue); color: #fff; }
+
+/* ─────────────────────────────────────────
+   HERO
+───────────────────────────────────────── */
+#hero {
+  position: relative; min-height: 100vh; overflow: hidden;
+  display: flex; flex-direction: column; justify-content: flex-end;
+  padding: 0 3.5rem 5rem;
+}
+
+/* subtle grid */
+.h-grid {
+  position: absolute; inset: 0; pointer-events: none;
+  background-image:
+    linear-gradient(rgba(26,60,204,.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(26,60,204,.06) 1px, transparent 1px);
+  background-size: 72px 72px;
+  mask-image: radial-gradient(ellipse 70% 70% at 50% 50%, black 40%, transparent 100%);
+}
+
+/* glowing orb */
+.h-orb {
+  position: absolute; top: -180px; right: -120px;
+  width: 700px; height: 700px; border-radius: 50%;
+  background: radial-gradient(circle, rgba(26,60,204,.22) 0%, transparent 68%);
+  pointer-events: none;
+  animation: orbPulse 8s ease-in-out infinite;
+}
+@keyframes orbPulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.6;transform:scale(1.05)} }
+
+.h-inner { position: relative; z-index: 1; max-width: 1200px; width: 100%; }
+
+.h-available {
+  display: inline-flex; align-items: center; gap: .55rem;
+  font-size: .72rem; font-weight: 600; letter-spacing: .1em;
+  text-transform: uppercase; color: var(--blue);
+  margin-bottom: 2rem;
+  opacity: 0; animation: fadeUp .5s .85s both;
+}
+.avail-dot {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: #22c55e; box-shadow: 0 0 8px #22c55e;
+  animation: dotPulse 2s infinite;
+}
+@keyframes dotPulse { 0%,100%{opacity:1}50%{opacity:.3} }
+
+.h-title {
+  font-family: 'Syne', sans-serif;
+  font-weight: 800;
+  font-size: clamp(3.8rem, 9.5vw, 9.5rem);
+  letter-spacing: -.03em; line-height: .9;
+  color: var(--white);
+  margin-bottom: 2rem;
+  opacity: 0; animation: fadeUp .7s .98s both;
+}
+.h-title .blue { color: var(--blue); }
+
+.h-sub {
+  max-width: 520px;
+  font-size: 1.02rem; font-weight: 300; line-height: 1.75;
+  color: var(--silver-d);
+  margin-bottom: 2.8rem;
+  opacity: 0; animation: fadeUp .65s 1.12s both;
+}
+.h-sub strong { color: var(--silver2); font-weight: 500; }
+
+.h-actions {
+  display: flex; gap: .9rem; flex-wrap: wrap;
+  opacity: 0; animation: fadeUp .6s 1.26s both;
+}
+.btn-blue {
+  display: inline-flex; align-items: center; gap: .5rem;
+  background: var(--blue); color: #fff;
+  padding: .78rem 1.9rem; border-radius: 2px;
+  font-size: .82rem; font-weight: 600; letter-spacing: .04em;
+  transition: background .2s, transform .15s;
+}
+.btn-blue:hover { background: var(--blue-h); transform: translateY(-2px); }
+.btn-outline {
+  display: inline-flex; align-items: center; gap: .5rem;
+  border: 1px solid var(--border2); color: var(--silver-d);
+  padding: .78rem 1.9rem; border-radius: 2px;
+  font-size: .82rem; font-weight: 500;
+  transition: border-color .2s, color .2s, transform .15s;
+}
+.btn-outline:hover { border-color: var(--blue); color: var(--white); transform: translateY(-2px); }
+
+/* right floaters */
+.h-floaters {
+  position: absolute; right: 3.5rem; bottom: 5rem; z-index: 1;
+  display: flex; flex-direction: column; gap: .8rem; align-items: flex-end;
+  opacity: 0; animation: fadeUp .6s 1.45s both;
+}
+.h-stat {
+  text-align: right;
+}
+.h-stat-n {
+  font-family: 'Syne', sans-serif; font-size: 2rem; font-weight: 800;
+  letter-spacing: -.03em; color: var(--white); line-height: 1;
+}
+.h-stat-l { font-size: .68rem; font-weight: 500; color: var(--silver-d); letter-spacing: .09em; text-transform: uppercase; }
+
+/* scroll hint */
+.h-scroll {
+  position: absolute; left: 3.5rem; bottom: 5rem; z-index: 1;
+  display: flex; align-items: center; gap: .8rem;
+  opacity: 0; animation: fadeUp .5s 1.6s both;
+}
+.h-scroll-bar { width: 36px; height: 1px; background: var(--border2); position: relative; overflow: hidden; }
+.h-scroll-bar::after {
+  content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%;
+  background: var(--blue); animation: slideBar 2.4s 1.7s infinite;
+}
+@keyframes slideBar { to { left: 100%; } }
+.h-scroll-text { font-size: .66rem; font-weight: 500; color: var(--silver-d); letter-spacing: .12em; text-transform: uppercase; }
+
+/* ticker */
+.h-ticker {
+  position: absolute; bottom: 0; left: 0; right: 0;
+  border-top: 1px solid var(--border);
+  padding: .55rem 0; overflow: hidden;
+  opacity: 0; animation: fadeUp .4s 1.75s both;
+}
+.h-ticker-track {
+  display: flex; width: max-content;
+  animation: tickScroll 28s linear infinite;
+}
+.tick-item {
+  display: flex; align-items: center; gap: 1.4rem;
+  padding: 0 1.8rem;
+  font-size: .68rem; font-weight: 600; letter-spacing: .1em;
+  text-transform: uppercase; color: var(--silver-d); white-space: nowrap;
+}
+.tick-item .sep { color: var(--blue); font-size: .5rem; }
+@keyframes tickScroll { from{transform:translateX(0)} to{transform:translateX(-50%)} }
+
+@keyframes fadeUp { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
+
+/* ─────────────────────────────────────────
+   SECTION SHARED
+───────────────────────────────────────── */
+.sec { max-width: 1200px; margin: 0 auto; padding: 6.5rem 3.5rem; position: relative; z-index: 1; }
+.s-label {
+  display: flex; align-items: center; gap: .65rem;
+  font-size: .65rem; font-weight: 700; letter-spacing: .2em;
+  text-transform: uppercase; color: var(--blue); margin-bottom: 1rem;
+}
+.s-label::before { content: ''; width: 20px; height: 1px; background: var(--blue); }
+.s-title {
+  font-family: 'Syne', sans-serif; font-weight: 800;
+  font-size: clamp(2.2rem, 4.5vw, 3.8rem);
+  letter-spacing: -.03em; line-height: .95;
+  color: var(--white); margin-bottom: .7rem;
+}
+.s-sub { font-size: .9rem; font-weight: 300; color: var(--silver-d); line-height: 1.7; max-width: 480px; }
+.s-header { margin-bottom: 3.2rem; }
+
+.divider { border: none; border-top: 1px solid var(--border); margin: 0 3.5rem; }
+
+/* reveal */
+.rv { opacity: 0; transform: translateY(26px); transition: opacity .6s ease, transform .6s ease; }
+.rv.in { opacity: 1; transform: translateY(0); }
+.d1{transition-delay:.08s} .d2{transition-delay:.16s} .d3{transition-delay:.24s}
+
+/* ─────────────────────────────────────────
+   ABOUT
+───────────────────────────────────────── */
+.about-wrap { display: grid; grid-template-columns: 1.15fr .85fr; gap: 4.5rem; align-items: start; }
+.about-body p { font-size: .95rem; line-height: 1.88; color: var(--silver-d); margin-bottom: 1.1rem; }
+.about-body p strong { color: var(--silver2); font-weight: 600; }
+.about-hl {
+  border-left: 2px solid var(--blue);
+  padding: .9rem 1.2rem; margin-top: .5rem;
+  background: var(--blue-dim);
+  font-size: .88rem; color: var(--silver-d); line-height: 1.65;
+}
+.about-hl strong { color: var(--blue); font-weight: 600; }
+.certs { display: flex; flex-wrap: wrap; gap: .5rem; margin-top: 1.5rem; }
+.cert {
+  display: inline-flex; align-items: center; gap: .4rem;
+  border: 1px solid rgba(180,150,0,.2); background: rgba(180,150,0,.06);
+  padding: .27rem .75rem; font-size: .68rem; font-weight: 600;
+  color: #a08a00; letter-spacing: .04em;
+}
+
+/* stat table */
+.stat-tbl { display: flex; flex-direction: column; gap: 1px; background: var(--border); }
+.stat-row {
+  background: var(--black2); padding: 1.15rem 1.4rem;
+  display: flex; align-items: center; justify-content: space-between; gap: .8rem;
+  transition: background .2s;
+}
+.stat-row:hover { background: var(--black3); }
+.stat-key { font-size: .8rem; color: var(--silver-d); }
+.stat-val {
+  font-family: 'Syne', sans-serif; font-size: 1.8rem; font-weight: 800;
+  letter-spacing: -.03em; color: var(--white); line-height: 1;
+}
+.stat-bar-w { flex: 1; height: 2px; background: rgba(255,255,255,.06); margin: 0 .8rem; }
+.stat-bar { height: 100%; background: var(--blue); width: 0; transition: width 1.1s ease; }
+
+/* ─────────────────────────────────────────
+   SKILLS
+───────────────────────────────────────── */
+#skills { background: var(--black2); }
+.sk-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1px; background: var(--border); }
+.sk-cell {
+  background: var(--black2); padding: 2rem;
+  position: relative; overflow: hidden;
+  transition: background .25s;
+}
+.sk-cell:hover { background: var(--black3); }
+.sk-cell::after {
+  content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 2px;
+  background: var(--blue); transform: scaleX(0); transform-origin: left;
+  transition: transform .3s ease;
+}
+.sk-cell:hover::after { transform: scaleX(1); }
+.sk-icon { font-size: 1.5rem; margin-bottom: 1rem; display: block; }
+.sk-cell h3 {
+  font-size: .75rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase;
+  color: var(--silver2); margin-bottom: .9rem;
+}
+.sk-pills { display: flex; flex-wrap: wrap; gap: .35rem; }
+.sk-pill {
+  font-size: .67rem; font-weight: 500; padding: .22rem .6rem;
+  border: 1px solid var(--border2); color: var(--silver-d);
+  transition: border-color .2s, color .2s;
+}
+.sk-cell:hover .sk-pill { border-color: var(--blue-b); color: var(--silver2); }
+
+/* ─────────────────────────────────────────
+   EXPERIENCE
+───────────────────────────────────────── */
+.exp-stack { display: flex; flex-direction: column; gap: 1px; background: var(--border); }
+.exp-card {
+  background: var(--black2);
+  transition: background .2s;
+}
+.exp-card:hover { background: var(--black3); }
+.exp-card-top {
+  padding: 1.8rem 2rem;
+  display: grid; grid-template-columns: 1fr auto; gap: 1rem; align-items: start;
+  border-bottom: 1px solid var(--border);
+}
+.exp-co {
+  font-size: .66rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase;
+  color: var(--blue); margin-bottom: .45rem; display: block;
+}
+.exp-role { font-size: 1.1rem; font-weight: 700; color: var(--white); margin-bottom: .18rem; }
+.exp-loc { font-size: .75rem; color: var(--silver-d); }
+.exp-date {
+  font-size: .68rem; font-weight: 600; color: var(--silver-d);
+  border: 1px solid var(--border2); padding: .3rem .75rem;
+  white-space: nowrap; align-self: start; letter-spacing: .05em;
+}
+.exp-body { padding: 1.4rem 2rem 1.8rem; }
+.exp-tags { display: flex; flex-wrap: wrap; gap: .4rem; margin-bottom: 1.2rem; }
+.exp-tag {
+  font-size: .67rem; font-weight: 600; padding: .2rem .55rem;
+  border: 1px solid; letter-spacing: .03em;
+}
+.et-j { border-color: rgba(0,195,255,.18); color: #009ab8; background: rgba(0,195,255,.05); }
+.et-a { border-color: rgba(255,160,0,.18); color: #a06800; background: rgba(255,160,0,.05); }
+.et-ai{ border-color: rgba(160,90,255,.18); color: #9060d0; background: rgba(160,90,255,.05); }
+.et-f { border-color: rgba(0,220,150,.15); color: #00967a; background: rgba(0,220,150,.04); }
+.et-g { border-color: var(--border2); color: var(--silver-d); background: rgba(255,255,255,.02); }
+.exp-bullets { list-style: none; display: flex; flex-direction: column; gap: .55rem; }
+.exp-bullets li {
+  display: flex; gap: .7rem; align-items: flex-start;
+  font-size: .86rem; line-height: 1.7; color: var(--silver-d);
+}
+.exp-bullets li::before { content: '—'; color: var(--blue); flex-shrink: 0; font-weight: 700; }
+.exp-bullets li strong { color: var(--silver2); font-weight: 600; }
+
+/* ─────────────────────────────────────────
+   PROJECTS — LIVE GITHUB
+───────────────────────────────────────── */
+.proj-hdr {
+  display: flex; align-items: flex-end; justify-content: space-between;
+  flex-wrap: wrap; gap: 1rem; margin-bottom: 3rem;
+}
+.live-tag {
+  display: inline-flex; align-items: center; gap: .45rem;
+  font-size: .67rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase;
+  color: var(--silver-d); border: 1px solid var(--border2); padding: .3rem .8rem;
+}
+.live-dot { width: 6px; height: 6px; border-radius: 50%; background: #22c55e; animation: dotPulse 2s infinite; }
+
+#proj-grid {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(340px,1fr));
+  gap: 1px; background: var(--border);
+}
+#proj-grid.loading {
+  display: flex; align-items: center; justify-content: center;
+  min-height: 260px; background: var(--black2); border: 1px solid var(--border);
+}
+.loading-txt { font-size: .8rem; color: var(--silver-d); letter-spacing: .08em; }
+
+.proj-card {
+  background: var(--black2); padding: 1.8rem;
+  display: flex; flex-direction: column; gap: .7rem;
+  transition: background .2s;
+  position: relative; overflow: hidden;
+}
+.proj-card::after {
+  content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 2px;
+  background: var(--blue); transform: scaleY(0); transform-origin: top;
+  transition: transform .3s ease;
+}
+.proj-card:hover { background: var(--black3); }
+.proj-card:hover::after { transform: scaleY(1); }
+
+.proj-top { display: flex; align-items: center; justify-content: space-between; }
+.proj-lang { display: flex; align-items: center; gap: .4rem; font-size: .7rem; color: var(--silver-d); font-weight: 500; }
+.lang-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+.proj-gh-link {
+  font-size: .68rem; font-weight: 600; letter-spacing: .06em; text-transform: uppercase;
+  color: var(--silver-d); border: 1px solid var(--border2); padding: .22rem .6rem;
+  transition: border-color .2s, color .2s;
+}
+.proj-gh-link:hover { border-color: var(--blue); color: var(--blue); }
+.proj-name { font-size: .98rem; font-weight: 700; color: var(--white); letter-spacing: -.01em; }
+.proj-desc { font-size: .82rem; color: var(--silver-d); line-height: 1.65; flex: 1; }
+.proj-topics { display: flex; flex-wrap: wrap; gap: .3rem; }
+.proj-topic {
+  font-size: .65rem; font-weight: 600; padding: .18rem .5rem;
+  background: var(--blue-dim); border: 1px solid var(--blue-b); color: #6a84f0;
+  letter-spacing: .04em;
+}
+
+/* ─────────────────────────────────────────
+   HOBBIES
+───────────────────────────────────────── */
+#hobbies { background: var(--black2); }
+.hobby-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1px; background: var(--border); }
+.hob {
+  background: var(--black2); padding: 2.5rem 2rem;
+  transition: background .2s; position: relative; overflow: hidden;
+}
+.hob:hover { background: var(--black3); }
+.hob::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+  background: var(--blue); transform: scaleX(0); transform-origin: left;
+  transition: transform .35s ease;
+}
+.hob:hover::before { transform: scaleX(1); }
+.hob-n {
+  font-family: 'Syne', sans-serif; font-size: 5.5rem; font-weight: 800;
+  color: rgba(255,255,255,.03); position: absolute; bottom: -.8rem; right: .5rem;
+  line-height: 1; pointer-events: none; user-select: none;
+}
+.hob-icon { font-size: 1.9rem; margin-bottom: 1.1rem; display: block; }
+.hob-name { font-size: 1.05rem; font-weight: 700; color: var(--white); margin-bottom: .55rem; }
+.hob-desc { font-size: .84rem; color: var(--silver-d); line-height: 1.7; margin-bottom: .9rem; }
+.hob-quip {
+  font-size: .76rem; color: var(--silver-d); opacity: .55;
+  border-top: 1px solid var(--border); padding-top: .75rem;
+  font-style: italic;
+}
+
+/* ─────────────────────────────────────────
+   EDUCATION
+───────────────────────────────────────── */
+.edu-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px,1fr)); gap: 1px; background: var(--border); }
+.edu-card {
+  background: var(--black2); padding: 1.8rem;
+  transition: background .2s;
+}
+.edu-card:hover { background: var(--black3); }
+.edu-badge {
+  display: inline-flex; align-items: center; gap: .4rem;
+  font-size: .65rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase;
+  padding: .24rem .7rem; border: 1px solid; margin-bottom: .9rem;
+}
+.eb-live { border-color: rgba(34,197,94,.25); color: #22c55e; background: rgba(34,197,94,.06); }
+.eb-done { border-color: var(--blue-b); color: var(--blue); background: var(--blue-dim); }
+.edu-deg { font-size: .98rem; font-weight: 700; color: var(--white); margin-bottom: .35rem; }
+.edu-uni { font-size: .8rem; color: var(--silver-d); margin-bottom: .25rem; }
+.edu-yr { font-size: .72rem; color: var(--silver-d); opacity: .6; }
+
+/* ─────────────────────────────────────────
+   CONNECT
+───────────────────────────────────────── */
+#connect { position: relative; overflow: hidden; }
+.connect-watermark {
+  position: absolute; bottom: -4rem; right: -2rem;
+  font-family: 'Syne', sans-serif; font-size: clamp(90px,16vw,180px);
+  font-weight: 800; letter-spacing: -.03em; line-height: 1;
+  color: rgba(26,60,204,.05); pointer-events: none; user-select: none;
+}
+.connect-body { position: relative; z-index: 1; }
+.connect-head {
+  font-family: 'Syne', sans-serif; font-weight: 800;
+  font-size: clamp(3rem, 8vw, 7.5rem);
+  letter-spacing: -.03em; line-height: .9;
+  color: var(--white); margin-bottom: 3rem;
+}
+.connect-head .blue { color: var(--blue); }
+.connect-head .dim { color: rgba(255,255,255,.12); }
+.connect-row { display: flex; align-items: flex-start; gap: 4rem; flex-wrap: wrap; margin-bottom: 3.5rem; }
+.connect-note { font-size: .93rem; font-weight: 300; color: var(--silver-d); line-height: 1.8; max-width: 400px; }
+.connect-note strong { color: var(--silver2); font-weight: 500; }
+.connect-email {
+  font-family: 'Syne', sans-serif; font-weight: 800;
+  font-size: clamp(.9rem, 2vw, 1.4rem); letter-spacing: .06em;
+  color: var(--blue); border-bottom: 1px solid var(--blue-b);
+  padding-bottom: .3rem; transition: border-color .2s;
+  text-transform: uppercase;
+}
+.connect-email:hover { border-color: var(--blue); }
+
+.link-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px,1fr)); gap: 1px; background: var(--border); }
+.lk {
+  display: flex; align-items: center; gap: .9rem;
+  background: var(--black2); padding: 1.2rem 1.5rem;
+  text-decoration: none; color: var(--silver);
+  transition: background .2s;
+  position: relative;
+}
+.lk::before {
+  content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 1px;
+  background: var(--blue); transform: scaleX(0); transform-origin: left;
+  transition: transform .25s ease;
+}
+.lk:hover { background: var(--black3); }
+.lk:hover::before { transform: scaleX(1); }
+.lk-ico { font-size: 1.2rem; flex-shrink: 0; }
+.lk-lbl { font-size: .62rem; font-weight: 600; color: var(--silver-d); display: block; text-transform: uppercase; letter-spacing: .1em; margin-bottom: .12rem; }
+.lk-val { font-size: .82rem; font-weight: 600; color: var(--silver2); }
+.lk-arr { margin-left: auto; color: var(--silver-d); transition: color .2s, transform .2s; }
+.lk:hover .lk-arr { color: var(--blue); transform: translateX(4px); }
+
+/* ─────────────────────────────────────────
+   FOOTER
+───────────────────────────────────────── */
+footer {
+  border-top: 1px solid var(--border);
+  padding: 1.8rem 3.5rem;
+  display: flex; align-items: center; justify-content: space-between;
+  flex-wrap: wrap; gap: 1rem;
+  background: var(--black2); position: relative; z-index: 1;
+}
+.foot-logo { font-family: 'Syne', sans-serif; font-size: .9rem; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; color: var(--white); }
+.foot-logo em { font-style: normal; color: var(--blue); }
+.foot-copy { font-size: .73rem; color: var(--silver-d); }
+.foot-copy span { color: var(--blue); }
+.foot-links { display: flex; gap: 1.6rem; }
+.foot-links a { font-size: .73rem; color: var(--silver-d); transition: color .2s; font-weight: 500; }
+.foot-links a:hover { color: var(--blue); }
+
+/* ─────────────────────────────────────────
+   RESPONSIVE
+───────────────────────────────────────── */
+@media(max-width: 960px){
+  nav { padding: .9rem 1.5rem; }
+  .nav-links { display: none; }
+  #hero, .sec { padding-left: 1.5rem; padding-right: 1.5rem; }
+  .h-floaters, .h-scroll { display: none; }
+  .about-wrap { grid-template-columns: 1fr; gap: 2.5rem; }
+  .sk-grid { grid-template-columns: repeat(2,1fr); }
+  .hobby-grid { grid-template-columns: 1fr; }
+  .divider { margin: 0 1.5rem; }
+  footer { padding: 1.5rem; flex-direction: column; text-align: center; }
+  .connect-row { flex-direction: column; gap: 1.5rem; }
+}
+@media(max-width: 560px){
+  .sk-grid { grid-template-columns: 1fr; }
+  #proj-grid { grid-template-columns: 1fr; }
+  .exp-card-top { grid-template-columns: 1fr; }
+}
+
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: var(--black); }
+::-webkit-scrollbar-thumb { background: var(--black3); }
+::-webkit-scrollbar-thumb:hover { background: var(--blue); }
+</style>
+</head>
+<body>
+
+<div id="cur"></div>
+<div id="cur-r"></div>
+
+<!-- LOADER -->
+<div id="loader">
+  <div class="ld-name">
+    <span>S</span><span>I</span><span>D</span><span>D</span><span class="blue">H</span><span class="blue">A</span><span class="blue">N</span><span class="blue">T</span>
+  </div>
+  <div class="ld-track"><div class="ld-fill" id="ld-fill"></div></div>
+</div>
+
+<!-- NAV -->
+<nav id="main-nav">
+  <div class="nav-logo">SA<em>.</em></div>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#connect">Contact</a></li>
+  </ul>
+  <a class="nav-pill" href="mailto:siddhant2acharya@gmail.com">Hire Me</a>
+</nav>
+
+<!-- ── HERO ── -->
+<section id="hero">
+  <div class="h-grid"></div>
+  <div class="h-orb"></div>
+
+  <div class="h-inner">
+    <div class="h-available"><span class="avail-dot"></span> Open to opportunities · Boston, MA</div>
+    <h1 class="h-title">
+      FULL&#8209;STACK<br>
+      <span class="blue">ENGINEER</span>
+    </h1>
+    <p class="h-sub">
+      <strong>5+ years</strong> building Java backends, AI/ML pipelines and cloud-native systems that serve thousands of users and stay up. Based in Boston, available globally.
+    </p>
+    <div class="h-actions">
+      <a class="btn-blue" href="#experience">View Experience</a>
+      <a class="btn-outline" href="https://github.com/Siddhant1419" target="_blank">GitHub ↗</a>
+      <a class="btn-outline" href="https://linkedin.com/in/siddhant-acharya" target="_blank">LinkedIn ↗</a>
+    </div>
+  </div>
+
+  <div class="h-floaters">
+    <div class="h-stat"><div class="h-stat-n">5+</div><div class="h-stat-l">Years exp.</div></div>
+    <div class="h-stat"><div class="h-stat-n">2K+</div><div class="h-stat-l">Users served</div></div>
+    <div class="h-stat"><div class="h-stat-n">99.9%</div><div class="h-stat-l">Uptime SLA</div></div>
+  </div>
+
+  <div class="h-scroll">
+    <div class="h-scroll-bar"></div>
+    <span class="h-scroll-text">Scroll</span>
+  </div>
+
+  <div class="h-ticker">
+    <div class="h-ticker-track">
+      <span class="tick-item">Java <span class="sep">◆</span></span>
+      <span class="tick-item">Spring Boot <span class="sep">◆</span></span>
+      <span class="tick-item">RAG Pipelines <span class="sep">◆</span></span>
+      <span class="tick-item">Docker · Kubernetes <span class="sep">◆</span></span>
+      <span class="tick-item">AWS · GCP · Azure <span class="sep">◆</span></span>
+      <span class="tick-item">ReactJS · TypeScript <span class="sep">◆</span></span>
+      <span class="tick-item">Spring AI · Ollama <span class="sep">◆</span></span>
+      <span class="tick-item">PostgreSQL · pgvector <span class="sep">◆</span></span>
+      <span class="tick-item">Microservices <span class="sep">◆</span></span>
+      <span class="tick-item">Java <span class="sep">◆</span></span>
+      <span class="tick-item">Spring Boot <span class="sep">◆</span></span>
+      <span class="tick-item">RAG Pipelines <span class="sep">◆</span></span>
+      <span class="tick-item">Docker · Kubernetes <span class="sep">◆</span></span>
+      <span class="tick-item">AWS · GCP · Azure <span class="sep">◆</span></span>
+      <span class="tick-item">ReactJS · TypeScript <span class="sep">◆</span></span>
+      <span class="tick-item">Spring AI · Ollama <span class="sep">◆</span></span>
+      <span class="tick-item">PostgreSQL · pgvector <span class="sep">◆</span></span>
+      <span class="tick-item">Microservices <span class="sep">◆</span></span>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- ── ABOUT ── -->
+<div class="sec rv" id="about">
+  <div class="s-header">
+    <div class="s-label">01 — About</div>
+    <h2 class="s-title">Who I Am</h2>
+  </div>
+  <div class="about-wrap">
+    <div>
+      <p class="about-body"><strong>Full-Stack Software Engineer</strong> with 5+ years shipping production systems that hold up under real load. At Koch Industries I built platforms serving 2,000+ users with 99.9% uptime — including LLM-powered automation and ML forecasting with direct revenue impact.</p>
+      <p class="about-body">My focus is the intersection of <strong>Java backend engineering and modern AI</strong>. I've built RAG pipelines, wired LLMs into enterprise workflows, and turned ML models into tools that measurably save time. Not demos — monitored, production-grade systems.</p>
+      <p class="about-body">Currently in Boston, actively interviewing. Open to full-time roles globally. Two master's degrees. Still occasionally Googles array syntax. We're all learning.</p>
+      <div class="about-hl">
+        <strong>Impact:</strong> Multi-million dollar reduction in commission overpayments. 40% faster release cycles. 50% less manual document review. 3 hrs/analyst/week saved with ML pricing models.
+      </div>
+      <div class="certs">
+        <span class="cert">🏅 AWS Cloud Practitioner</span>
+        <span class="cert">🏅 AWS Solutions Architect – Associate</span>
+      </div>
+    </div>
+    <div class="stat-tbl rv d1">
+      <div class="stat-row">
+        <span class="stat-key">Years experience</span>
+        <div class="stat-bar-w"><div class="stat-bar" data-w="100"></div></div>
+        <span class="stat-val">5+</span>
+      </div>
+      <div class="stat-row">
+        <span class="stat-key">Users in prod</span>
+        <div class="stat-bar-w"><div class="stat-bar" data-w="90"></div></div>
+        <span class="stat-val">2K+</span>
+      </div>
+      <div class="stat-row">
+        <span class="stat-key">System uptime</span>
+        <div class="stat-bar-w"><div class="stat-bar" data-w="99"></div></div>
+        <span class="stat-val">99.9%</span>
+      </div>
+      <div class="stat-row">
+        <span class="stat-key">Test coverage</span>
+        <div class="stat-bar-w"><div class="stat-bar" data-w="80"></div></div>
+        <span class="stat-val">80%+</span>
+      </div>
+      <div class="stat-row">
+        <span class="stat-key">Release cycle cut</span>
+        <div class="stat-bar-w"><div class="stat-bar" data-w="40"></div></div>
+        <span class="stat-val">40%</span>
+      </div>
+      <div class="stat-row">
+        <span class="stat-key">LLM cost (DocQA)</span>
+        <div class="stat-bar-w"><div class="stat-bar" data-w="2"></div></div>
+        <span class="stat-val">$0/mo</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<hr class="divider">
+
+<!-- ── SKILLS ── -->
+<section id="skills">
+  <div class="sec rv">
+    <div class="s-header">
+      <div class="s-label">02 — Skills</div>
+      <h2 class="s-title">The Stack</h2>
+      <p class="s-sub">Five years of building means knowing what matters in production — not just what looks good on a slide.</p>
+    </div>
+    <div class="sk-grid">
+      <div class="sk-cell rv d1">
+        <span class="sk-icon">☕</span>
+        <h3>Java Backend</h3>
+        <div class="sk-pills">
+          <span class="sk-pill">Java 8–21</span><span class="sk-pill">Spring Boot 3</span>
+          <span class="sk-pill">Spring MVC</span><span class="sk-pill">Spring Data JPA</span>
+          <span class="sk-pill">Hibernate</span><span class="sk-pill">Kotlin</span><span class="sk-pill">Maven</span>
+        </div>
+      </div>
+      <div class="sk-cell rv d2">
+        <span class="sk-icon">🤖</span>
+        <h3>AI / GenAI / ML</h3>
+        <div class="sk-pills">
+          <span class="sk-pill">Spring AI</span><span class="sk-pill">LangChain</span>
+          <span class="sk-pill">RAG Pipelines</span><span class="sk-pill">OpenAI API</span>
+          <span class="sk-pill">Ollama</span><span class="sk-pill">pgvector</span>
+          <span class="sk-pill">Hugging Face</span><span class="sk-pill">Scikit-learn</span>
+        </div>
+      </div>
+      <div class="sk-cell rv d3">
+        <span class="sk-icon">☁️</span>
+        <h3>Cloud & DevOps</h3>
+        <div class="sk-pills">
+          <span class="sk-pill">AWS</span><span class="sk-pill">GCP</span><span class="sk-pill">Azure</span>
+          <span class="sk-pill">Docker</span><span class="sk-pill">Kubernetes</span>
+          <span class="sk-pill">Terraform</span><span class="sk-pill">Jenkins</span><span class="sk-pill">CI/CD</span>
+        </div>
+      </div>
+      <div class="sk-cell rv d1">
+        <span class="sk-icon">🌐</span>
+        <h3>Web & APIs</h3>
+        <div class="sk-pills">
+          <span class="sk-pill">ReactJS</span><span class="sk-pill">AngularJS</span>
+          <span class="sk-pill">TypeScript</span><span class="sk-pill">REST</span>
+          <span class="sk-pill">GraphQL</span><span class="sk-pill">gRPC</span>
+          <span class="sk-pill">Apache Kafka</span><span class="sk-pill">WebSockets</span>
+        </div>
+      </div>
+      <div class="sk-cell rv d2">
+        <span class="sk-icon">🗄️</span>
+        <h3>Databases</h3>
+        <div class="sk-pills">
+          <span class="sk-pill">PostgreSQL</span><span class="sk-pill">SQL Server</span>
+          <span class="sk-pill">Oracle</span><span class="sk-pill">MongoDB</span>
+          <span class="sk-pill">DynamoDB</span><span class="sk-pill">pgvector</span><span class="sk-pill">H2</span>
+        </div>
+      </div>
+      <div class="sk-cell rv d3">
+        <span class="sk-icon">🔧</span>
+        <h3>Tools & Concepts</h3>
+        <div class="sk-pills">
+          <span class="sk-pill">Git</span><span class="sk-pill">Splunk</span>
+          <span class="sk-pill">Grafana</span><span class="sk-pill">OAuth2</span>
+          <span class="sk-pill">System Design</span><span class="sk-pill">Microservices</span>
+          <span class="sk-pill">HLD / LLD</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- ── EXPERIENCE ── -->
+<div class="sec rv" id="experience">
+  <div class="s-header">
+    <div class="s-label">03 — Experience</div>
+    <h2 class="s-title">Where I've Shipped</h2>
+    <p class="s-sub">Four roles. Multi-million dollar impact. Zero 3AM calls I'll admit to publicly.</p>
+  </div>
+  <div class="exp-stack">
+
+    <div class="exp-card rv">
+      <div class="exp-card-top">
+        <div>
+          <span class="exp-co">Georgia-Pacific · Koch Industries</span>
+          <div class="exp-role">Software Engineer</div>
+          <div class="exp-loc">Atlanta, GA</div>
+        </div>
+        <div class="exp-date">Jan 2023 – May 2025</div>
+      </div>
+      <div class="exp-body">
+        <div class="exp-tags">
+          <span class="exp-tag et-j">Java</span><span class="exp-tag et-j">Spring Boot</span>
+          <span class="exp-tag et-f">AngularJS</span><span class="exp-tag et-a">AWS</span>
+          <span class="exp-tag et-g">Docker</span><span class="exp-tag et-g">Kubernetes</span>
+          <span class="exp-tag et-ai">LangChain</span><span class="exp-tag et-ai">Azure OpenAI</span>
+          <span class="exp-tag et-a">Azure DevOps</span>
+        </div>
+        <ul class="exp-bullets">
+          <li>Refactored ProSearch & GPXpress for <strong>560+ users</strong> — frontend perf +35%, resolution time −25%.</li>
+          <li>Commissions platform contributed to ~<strong>4% reduction in overpayments</strong> — multi-million dollar impact; CI/CD automation cut release cycles <strong>40%</strong>.</li>
+          <li>LLM-powered doc summarization via Azure OpenAI for <strong>2,000+ users</strong> — review time −50%, decision turnaround −30%.</li>
+          <li>RAG pipeline (LangChain + Azure Cognitive Search) — lookup time −40%, first-contact resolution +18%.</li>
+          <li>ML-based What-If pricing analysis with <strong>92% accuracy</strong>, saving analysts 3 hrs/week.</li>
+          <li>Event-driven alerting (AWS SNS/SQS, IAM) → <strong>99.9% uptime</strong> across 5+ enterprise systems.</li>
+          <li>Mentored junior dev; drove test coverage to <strong>80%+</strong>, production incidents −15% over two quarters.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="exp-card rv d1">
+      <div class="exp-card-top">
+        <div>
+          <span class="exp-co">Georgia-Pacific · Koch Industries</span>
+          <div class="exp-role">AWS Intern</div>
+          <div class="exp-loc">Atlanta, GA</div>
+        </div>
+        <div class="exp-date">May 2022 – Aug 2022</div>
+      </div>
+      <div class="exp-body">
+        <div class="exp-tags">
+          <span class="exp-tag et-a">EC2</span><span class="exp-tag et-a">S3</span>
+          <span class="exp-tag et-a">CloudFormation</span><span class="exp-tag et-a">CloudWatch</span>
+          <span class="exp-tag et-a">SNS</span><span class="exp-tag et-a">IAM</span>
+        </div>
+        <ul class="exp-bullets">
+          <li>Cloud monitoring dashboard — manual status checks −60% for 15+ engineers.</li>
+          <li>Automated billing alerts (SNS/CloudWatch) — response time −30%, flagged 12+ cost overruns.</li>
+          <li>Reusable CloudFormation templates: environment setup 4 hrs → <strong>under 30 mins</strong>.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="exp-card rv d2">
+      <div class="exp-card-top">
+        <div>
+          <span class="exp-co">Dots Info Systems Pvt. Ltd.</span>
+          <div class="exp-role">Software Engineer</div>
+          <div class="exp-loc">Mumbai, India</div>
+        </div>
+        <div class="exp-date">Jan 2020 – Mar 2021</div>
+      </div>
+      <div class="exp-body">
+        <div class="exp-tags">
+          <span class="exp-tag et-f">ReactJS</span><span class="exp-tag et-f">TypeScript</span>
+          <span class="exp-tag et-f">HTML/CSS</span><span class="exp-tag et-g">REST APIs</span><span class="exp-tag et-g">OpenAPI</span>
+        </div>
+        <ul class="exp-bullets">
+          <li>Mobile-first apps for 3 enterprise clients — engagement +25% across 10+ breakpoints.</li>
+          <li>Reusable component library −30% dev time; lazy loading shaved <strong>1.8s</strong> off page loads.</li>
+          <li>OpenAPI contracts — integration defects −22%, debugging −5 hrs/sprint.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="exp-card rv d3">
+      <div class="exp-card-top">
+        <div>
+          <span class="exp-co">Star JaiSi</span>
+          <div class="exp-role">Software Engineer</div>
+          <div class="exp-loc">Mumbai, India</div>
+        </div>
+        <div class="exp-date">Jan 2019 – Jan 2020</div>
+      </div>
+      <div class="exp-body">
+        <div class="exp-tags">
+          <span class="exp-tag et-f">JavaScript</span><span class="exp-tag et-f">ReactJS</span>
+          <span class="exp-tag et-f">TypeScript</span><span class="exp-tag et-f">HTML/CSS</span>
+        </div>
+        <ul class="exp-bullets">
+          <li>Revamped 5 client sites with responsive ReactJS — contributed to <strong>30% increase in client sales</strong>.</li>
+          <li>SEO + semantic HTML → organic traffic +25% in 6 months.</li>
+          <li>Cross-browser fixes (Chrome, Firefox, Safari) — UI issues −35%.</li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<hr class="divider">
+
+<!-- ── PROJECTS ── -->
+<div class="sec rv" id="projects">
+  <div class="proj-hdr">
+    <div>
+      <div class="s-label">04 — Projects</div>
+      <h2 class="s-title">Pinned Repos</h2>
+      <p class="s-sub">Live from GitHub. Pin or unpin a repo and this updates automatically.</p>
+    </div>
+    <div class="live-tag"><span class="live-dot"></span> Auto-synced · github.com/Siddhant1419</div>
+  </div>
+  <div id="proj-grid" class="loading">
+    <span class="loading-txt">Fetching repos from GitHub…</span>
+  </div>
+</div>
+
+<hr class="divider">
+
+<!-- ── EDUCATION ── -->
+<div class="sec rv" id="education">
+  <div class="s-header">
+    <div class="s-label">05 — Education</div>
+    <h2 class="s-title">Credentials</h2>
+    <p class="s-sub">Formally trained. Stack Overflow co-authored the rest.</p>
+  </div>
+  <div class="edu-row">
+    <div class="edu-card rv">
+      <div class="edu-badge eb-live">● In Progress</div>
+      <div class="edu-deg">M.S. Engineering Management</div>
+      <div class="edu-uni">Trine University · Reston, VA</div>
+      <div class="edu-yr">Oct 2025 – Dec 2027</div>
+    </div>
+    <div class="edu-card rv d1">
+      <div class="edu-badge eb-done">✓ Graduated</div>
+      <div class="edu-deg">M.S. Computer Science</div>
+      <div class="edu-uni">Missouri State University · Springfield, MO</div>
+      <div class="edu-yr">Jan 2021 – Dec 2022</div>
+    </div>
+    <div class="edu-card rv d2">
+      <div class="edu-badge eb-done">✓ Graduated</div>
+      <div class="edu-deg">B.E. Information Technology</div>
+      <div class="edu-uni">University of Mumbai · India</div>
+      <div class="edu-yr">Aug 2014 – Jun 2018</div>
+    </div>
+  </div>
+</div>
+
+<hr class="divider">
+
+<!-- ── HOBBIES ── -->
+<section id="hobbies">
+  <div class="sec rv">
+    <div class="s-header">
+      <div class="s-label">06 — Beyond the Code</div>
+      <h2 class="s-title">Life</h2>
+      <p class="s-sub">Engineers contain multitudes. Here's proof.</p>
+    </div>
+    <div class="hobby-grid">
+      <div class="hob rv">
+        <div class="hob-n">01</div>
+        <span class="hob-icon">⚽</span>
+        <div class="hob-name">Soccer</div>
+        <p class="hob-desc">Midfielder. Reading the game is just real-time analysis of 22 moving objects. Same skill set, different runtime.</p>
+        <div class="hob-quip">Debugging is finding the teammate who made the wrong call.</div>
+      </div>
+      <div class="hob rv d1">
+        <div class="hob-n">02</div>
+        <span class="hob-icon">💃</span>
+        <div class="hob-name">Dancing</div>
+        <p class="hob-desc">Salsa, contemporary, whatever comes on. Good footwork. Yes, engineers can dance — it's just choreography with better error handling.</p>
+        <div class="hob-quip">Two left feet is a UX problem. Fixed it.</div>
+      </div>
+      <div class="hob rv d2">
+        <div class="hob-n">03</div>
+        <span class="hob-icon">🌍</span>
+        <div class="hob-name">Geopolitics & Travel</div>
+        <p class="hob-desc">Lived across three countries, obsessed with how systems — political, economic, social — actually work under the surface.</p>
+        <div class="hob-quip">Shares a birthday with Michael Jackson. Unverified correlation with dancing.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- ── CONNECT ── -->
+<div class="sec rv" id="connect">
+  <div class="connect-watermark">CONTACT</div>
+  <div class="connect-body">
+    <h2 class="connect-head">
+      LET'S<br>
+      <span class="blue">BUILD</span><br>
+      <span class="dim">SOMETHING.</span>
+    </h2>
+    <div class="connect-row">
+      <p class="connect-note">
+        Open to <strong>full-time roles</strong>, contract work, and conversations about Java systems, AI engineering, and cloud architecture. Boston-based, open globally. Responds faster than most CI pipelines.
+      </p>
+      <a class="connect-email" href="mailto:siddhant2acharya@gmail.com">
+        SIDDHANT2ACHARYA@GMAIL.COM →
+      </a>
+    </div>
+    <div class="link-grid">
+      <a class="lk" href="https://github.com/Siddhant1419" target="_blank">
+        <span class="lk-ico">🐙</span>
+        <div><span class="lk-lbl">Code</span><span class="lk-val">github.com/Siddhant1419</span></div>
+        <span class="lk-arr">→</span>
+      </a>
+      <a class="lk" href="https://linkedin.com/in/siddhant-acharya" target="_blank">
+        <span class="lk-ico">💼</span>
+        <div><span class="lk-lbl">Professional</span><span class="lk-val">siddhant-acharya</span></div>
+        <span class="lk-arr">→</span>
+      </a>
+      <a class="lk" href="Siddhant__Acharya__Resume.docx" target="_blank">
+        <span class="lk-ico">📄</span>
+        <div><span class="lk-lbl">Download</span><span class="lk-val">Resume / CV</span></div>
+        <span class="lk-arr">→</span>
+      </a>
+      <a class="lk" href="tel:+18573337283">
+        <span class="lk-ico">📞</span>
+        <div><span class="lk-lbl">Phone</span><span class="lk-val">+1 (857) 333-7283</span></div>
+        <span class="lk-arr">→</span>
+      </a>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="foot-logo">SA<em>.</em></div>
+  <div class="foot-copy">© 2026 Siddhant Acharya · <span>Projects auto-sync from GitHub</span></div>
+  <div class="foot-links">
+    <a href="https://github.com/Siddhant1419" target="_blank">GitHub</a>
+    <a href="https://linkedin.com/in/siddhant-acharya" target="_blank">LinkedIn</a>
+    <a href="mailto:siddhant2acharya@gmail.com">Email</a>
+  </div>
+</footer>
+
+<script>
+/* ── CURSOR ── */
+const cr=document.getElementById('cur'),crr=document.getElementById('cur-r');
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cr.style.left=mx+'px';cr.style.top=my+'px';});
+(function loop(){rx+=(mx-rx)*.11;ry+=(my-ry)*.11;crr.style.left=rx+'px';crr.style.top=ry+'px';requestAnimationFrame(loop);})();
+document.querySelectorAll('a,button,.exp-card,.hob,.edu-card,.stat-row,.sk-cell').forEach(el=>{
+  el.addEventListener('mouseenter',()=>document.body.classList.add('hov'));
+  el.addEventListener('mouseleave',()=>document.body.classList.remove('hov'));
+});
+
+/* ── LOADER ── */
+const lf=document.getElementById('ld-fill'),ld=document.getElementById('loader');
+let p=0;
+const iv=setInterval(()=>{
+  p+=Math.random()*24+6; if(p>100)p=100;
+  lf.style.width=p+'%';
+  if(p>=100){clearInterval(iv);setTimeout(()=>ld.classList.add('out'),320);}
+},150);
+
+/* ── NAV ── */
+window.addEventListener('scroll',()=>document.getElementById('main-nav').classList.toggle('stuck',scrollY>50),{passive:true});
+
+/* ── SCROLL REVEAL ── */
+const obs=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('in');});},{threshold:.07});
+document.querySelectorAll('.rv').forEach(el=>obs.observe(el));
+
+/* ── STAT BARS ── */
+const bobs=new IntersectionObserver(es=>{
+  es.forEach(e=>{if(e.isIntersecting)e.target.querySelectorAll('.stat-bar').forEach(b=>setTimeout(()=>{b.style.width=b.dataset.w+'%';},150));});
+},{threshold:.2});
+document.querySelectorAll('.stat-tbl').forEach(el=>bobs.observe(el));
+
+/* ── GITHUB PINNED REPOS ── */
+const PINNED=['DnDLootFinder','Infinite-Scroller','Likewise','Python-Dictionary','aifinops','docqa-rag'];
+const LANG_COLORS={Java:'#b07219',JavaScript:'#f1e05a',TypeScript:'#3178c6',Python:'#3572A5',Kotlin:'#A97BFF',HTML:'#e34c26',CSS:'#563d7c'};
+
+function renderRepos(repos){
+  const g=document.getElementById('proj-grid');
+  g.classList.remove('loading');
+  g.innerHTML='';
+  repos.forEach((r,i)=>{
+    const lc=LANG_COLORS[r.primaryLanguage?.name]||'#6e7681';
+    const topics=(r.repositoryTopics?.nodes||[]).map(t=>t.topic.name).slice(0,4);
+    const card=document.createElement('div');
+    card.className='proj-card';
+    card.style.cssText='opacity:0;transform:translateY(20px);transition:opacity .45s ease,transform .45s ease';
+    card.innerHTML=`
+      <div class="proj-top">
+        <div class="proj-lang">${r.primaryLanguage?.name?`<span class="lang-dot" style="background:${lc}"></span>${r.primaryLanguage.name}`:''}</div>
+        <a class="proj-gh-link" href="${r.url}" target="_blank">View ↗</a>
+      </div>
+      <div class="proj-name">${r.name}${r.isFork?' <span style="font-size:.7rem;font-weight:400;color:var(--silver-d)">(fork)</span>':''}</div>
+      <div class="proj-desc">${r.description||'No description.'}</div>
+      ${topics.length?`<div class="proj-topics">${topics.map(t=>`<span class="proj-topic">${t}</span>`).join('')}</div>`:''}
+    `;
+    g.appendChild(card);
+    setTimeout(()=>{card.style.opacity='1';card.style.transform='translateY(0)';},i*70);
+  });
+}
+
+async function loadRepos(){
+  try{
+    const res=await fetch('https://api.github.com/users/Siddhant1419/repos?per_page=100',{headers:{'Accept':'application/vnd.github.v3+json'}});
+    if(!res.ok)throw new Error(res.status);
+    const all=await res.json();
+    // Fetch topics for each pinned repo
+    const pinned=await Promise.all(
+      PINNED.map(async name=>{
+        const r=all.find(x=>x.name===name);
+        if(!r)return null;
+        try{
+          const tr=await fetch(`https://api.github.com/repos/Siddhant1419/${name}/topics`,{headers:{'Accept':'application/vnd.github.mercy-preview+json'}});
+          const td=await tr.json();
+          r.topics=td.names||[];
+        }catch(_){r.topics=[];}
+        return{name:r.name,description:r.description,url:r.html_url,isFork:r.fork,
+          primaryLanguage:r.language?{name:r.language}:null,
+          repositoryTopics:{nodes:r.topics.map(t=>({topic:{name:t}}))}};
+      })
+    );
+    renderRepos(pinned.filter(Boolean));
+  }catch(e){
+    console.warn('GitHub API fallback:',e);
+    renderRepos([
+      {name:'docqa-rag',description:'RAG Document Q&A API — fully local, $0 LLM cost. Sub-450ms retrieval via pgvector HNSW indexing.',url:'https://github.com/Siddhant1419/docqa-rag',isFork:false,primaryLanguage:{name:'Java'},repositoryTopics:{nodes:[{topic:{name:'spring-ai'}},{topic:{name:'rag'}},{topic:{name:'ollama'}},{topic:{name:'pgvector'}}]}},
+      {name:'aifinops',description:'Spring Boot MCP Server for AI cost analytics. Identified 94% cost reduction opportunity across teams.',url:'https://github.com/Siddhant1419/aifinops',isFork:false,primaryLanguage:{name:'Java'},repositoryTopics:{nodes:[{topic:{name:'spring-boot'}},{topic:{name:'mcp'}},{topic:{name:'finops'}}]}},
+      {name:'DnDLootFinder',description:'A DM aid for Dungeons & Dragons — because loot tables deserve clean code.',url:'https://github.com/Siddhant1419/DnDLootFinder',isFork:true,primaryLanguage:{name:'Kotlin'},repositoryTopics:{nodes:[]}},
+      {name:'Infinite-Scroller',description:'Infinite scroll implementation in vanilla JavaScript.',url:'https://github.com/Siddhant1419/Infinite-Scroller',isFork:false,primaryLanguage:{name:'JavaScript'},repositoryTopics:{nodes:[]}},
+      {name:'Likewise',description:'JavaScript application project.',url:'https://github.com/Siddhant1419/Likewise',isFork:false,primaryLanguage:{name:'JavaScript'},repositoryTopics:{nodes:[]}},
+      {name:'Python-Dictionary',description:'Python dictionary utilities project.',url:'https://github.com/Siddhant1419/Python-Dictionary',isFork:false,primaryLanguage:{name:'Python'},repositoryTopics:{nodes:[]}},
+    ]);
+  }
+}
+loadRepos();
+
+/* ── CONSOLE ── */
+console.log('%c\nSA.\n\n📧 siddhant2acharya@gmail.com\n🐙 github.com/Siddhant1419\n💼 linkedin.com/in/siddhant-acharya\n\nYou opened DevTools. I respect the curiosity.\n','color:#1a3ccc;font-family:monospace;font-size:12px;');
+</script>
+</body>
+</html>
